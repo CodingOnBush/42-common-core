@@ -1,9 +1,13 @@
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
+#include "Form.hpp"
+
 #include <iostream>
 #include <string>
 #include <exception>
+
+class Form;
 
 class Bureaucrat
 {
@@ -27,6 +31,8 @@ class Bureaucrat
 		
 		void				incrementGrade();
 		void				decrementGrade();
+
+		void				signForm(Form &f);
 
 	public:
 		class GradeTooHighException : public std::exception
