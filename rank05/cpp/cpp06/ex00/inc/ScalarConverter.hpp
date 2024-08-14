@@ -15,4 +15,4 @@ class ScalarConverter
 		static void	convert(const std::string &str);
 };
 
-#endif
+#endifw
