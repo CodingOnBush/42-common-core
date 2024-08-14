@@ -51,13 +51,15 @@ int	main(void)
 
 		std::cout << "b1's name: " << b1.getName() << std::endl;
 		std::cout << "b2's grade: " << b2.getGrade() << std::endl;
-		std::cout << "using overloaded operator :" << b2 << std::endl;
+		std::cout << "using overloaded operator : " << b2 << std::endl;
 		b1.decrementGrade();
 		std::cout << "let's have a too high exception :" << std::endl;
 		b2.incrementGrade();
+		std::cout << "This line should not be printed" << std::endl;
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << RED << e.what() << RESET << std::endl;
 	}
+	return (0);
 }

@@ -15,9 +15,9 @@ Bureaucrat::Bureaucrat(void) : _name("Default name"), _grade(150) {}
 
 Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name)
 {
-	if (grade > _maxGrade)
+	if (grade > 150)
 		throw Bureaucrat::GradeTooLowException();
-	else if (grade < _minGrade)
+	else if (grade < 1)
 		throw Bureaucrat::GradeTooHighException();
 	_grade = grade;
 }

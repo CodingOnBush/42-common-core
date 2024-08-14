@@ -11,12 +11,24 @@ const char	*Form::GradeTooLowException::what() const throw()
 	return ("Grade is too low !");
 }
 
-Form::Form(void) : _name(), _signed(false), _signGrade(150), _execGrade(150)
+Form::Form(void) : 
+	_name("default name"), 
+	_signed(false), 
+	_signGrade(150), 
+	_execGrade(150)
 {
 }
 
-Form::Form(const Form &src) : _name(src._name), _signed(src._signed), _signGrade(src._signGrade), _execGrade(src._execGrade)
+Form::Form(const Form &src) : 
+	_name(src._name), 
+	_signed(src._signed), 
+	_signGrade(src._signGrade), 
+	_execGrade(src._execGrade)
 {
+	if (src._signGrade > 150 || src._execGrade > 150)
+		throw Form::GradeTooLowException();
+	else if (src._signGrade < 1 || src._execGrade < 1)
+		throw Form::GradeTooHighException();
 }
 
 Form &Form::operator=(const Form &rhs)
@@ -30,7 +42,10 @@ Form::~Form(void)
 {
 }
 
-Form::Form(const std::string name, const int signGrade, const int execGrade) : _name(name), _signGrade(signGrade), _execGrade(execGrade)
+Form::Form(const std::string name, const int signGrade, const int execGrade) : 
+	_name(name), 
+	_signGrade(signGrade), 
+	_execGrade(execGrade)
 {
 	_signed = false;
 	if (signGrade > 150 || execGrade > 150)
