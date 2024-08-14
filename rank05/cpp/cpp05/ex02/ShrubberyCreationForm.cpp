@@ -36,8 +36,11 @@ ShrubberyCreationForm::ShrubberyCreationForm(const std::string target) :
 
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
+	std::string		filename = _target + "_shrubbery";
+	std::ofstream	file;
+
 	this->checkRequirements(executor);
-	std::ofstream	file(_target + "_shrubbery");
+	file.open(filename.c_str());
 	if (!file.is_open())
 		std::cerr << "Error: could not open file" << std::endl;
 	else

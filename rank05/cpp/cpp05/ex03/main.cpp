@@ -7,6 +7,7 @@
 
 int	main(void)
 {
+	srand(time(NULL));
 	try
 	{
 		Bureaucrat	b("Bender", 1);
@@ -14,7 +15,7 @@ int	main(void)
 		AForm		*rrf;
 
 		// "shrubbery creation" or "robotomy request" or "presidential pardon"
-		rrf = someRandomIntern.makeForm("shrubbery creation", "Bender");
+		rrf = someRandomIntern.makeForm("presidential pardon", "Bender");
 		rrf->beSigned(b);
 		rrf->execute(b);
 		delete rrf;

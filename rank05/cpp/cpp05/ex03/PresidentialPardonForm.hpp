@@ -2,6 +2,8 @@
 # define PRESIDENTIALPARDONFORM_HPP
 
 # include "AForm.hpp"
+# include <ctime>
+# include <cstdlib>
 
 class PresidentialPardonForm : public AForm
 {

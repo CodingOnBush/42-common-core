@@ -6,6 +6,7 @@
 
 int	main(void)
 {
+	srand(time(NULL));
 	// AForm f("f1", 1, 1);//impossible to create an abstract form
 	AForm					*form = new PresidentialPardonForm("ptr");
 	Bureaucrat				executor("executor", 1);
@@ -24,10 +25,8 @@ int	main(void)
 		rrf.beSigned(executor);
 		scf.beSigned(executor);
 		form->beSigned(executor);
-
 		std::cout << "------------------" << std::endl;
 		ppf.execute(executor);
-		rrf.execute(executor);
 		rrf.execute(executor);
 		scf.execute(executor);
 		form->execute(executor);

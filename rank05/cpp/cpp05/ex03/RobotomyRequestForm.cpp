@@ -35,12 +35,10 @@ RobotomyRequestForm::RobotomyRequestForm(const std::string target) :
 
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
-	static int count = 0;
 	this->checkRequirements(executor);// Could throw an exception
 	std::cout << "* drilling noises * ";
-	if (count % 2)
+	if (std::rand() % 2)
 		std::cout << _target << " has been robotomized successfully" << std::endl;
 	else
 		std::cout << _target << " robotomization failed" << std::endl;
-	count++;
 }

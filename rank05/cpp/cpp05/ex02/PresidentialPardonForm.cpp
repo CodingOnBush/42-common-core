@@ -34,6 +34,6 @@ PresidentialPardonForm::PresidentialPardonForm(const std::string target) :
 
 void PresidentialPardonForm::execute(Bureaucrat const &executor) const
 {
-	this->checkRequirements(executor);//could throw exception here
+	this->checkRequirements(executor);//can throw exception here
 	std::cout << _target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }
