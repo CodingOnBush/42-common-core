@@ -21,3 +21,6 @@ They create an NGINX server (with Docker). Then they created a custom client to 
 Never store something from the client in a string beacause it can be contain '\0' and it will be a problem. Instead, use Vector of char.
 
 I hope it will help us.
+
+*Saturday, 17 August 2024*\
+I really need to understand what are sockets and how they work.
