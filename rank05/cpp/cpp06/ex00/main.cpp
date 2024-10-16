@@ -1,33 +1,31 @@
 #include "./inc/ScalarConverter.hpp"
 
-static int	err(const std::string &msg)
+static void	checkArgs(int ac, char **av)
 {
-	std::cerr << msg << std::endl;
-	return 1;
-}
+	std::string	str;
 
-static bool	strIsDisplayable(const std::string &str)
-{
-	for (size_t i = 0; i < str.length(); i++)
-	{
-		if (!isprint(str[i]))
-			return false;
-	}
-	return true;
+	if (ac != 2)
+		throw std::invalid_argument("Usage: ./convert [string]");
+	str = av[1];
+	if (str.empty())
+		throw std::invalid_argument("Error: empty string");
+	if (str.size() == 1 && !isprint(str[0]))
+		throw std::invalid_argument("Error: this char is not displayable");
 }
 
 int	main(int ac, char **av)
 {
-	std::string	str;
-
-	if (ac !=2)
-		return err("Usage: ./convert [string]");
-	str = av[1];
-	if (str.empty())
-		return err("Error: empty string");
-	if (!strIsDisplayable(str))
-		return err("Error: string is not displayable");
-	ScalarConverter::convert(str);
+	
+	try
+	{
+		checkArgs(ac, av);
+		ScalarConverter::convert(av[1]);
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return 1;
+	}
 	return 0;
 }
 
