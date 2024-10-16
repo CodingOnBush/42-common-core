@@ -1,82 +1,88 @@
-#include "../inc/ScalarConverter.hpp"
+#include "ScalarConverter.hpp"
 
-ScalarConverter::~ScalarConverter()
-{
+// Constructeur privé (non implémenté car inutile)
+ScalarConverter::ScalarConverter() {}
+
+void ScalarConverter::convert(const std::string &literal) {
+	double value;
+
+	if (isPseudoLiteral(literal)) {
+		value = getPseudoLiteralValue(literal);
+	} else {
+		try
+		{
+			value = std::stod(literal);
+		}
+		catch (const std::invalid_argument &)
+		{
+			std::cerr << "Conversion impossible: argument invalide." << std::endl;
+			return;
+		}
+		catch (const std::out_of_range &)
+		{
+			std::cerr << "Conversion impossible: hors de portée." << std::endl;
+			return;
+		}
+	}
+	printChar(value);
+	printInt(value);
+	printFloat(value);
+	printDouble(value);
 }
 
-static bool	isChar(const std::string &str)
+void ScalarConverter::printChar(double value) {
+    if (value < 0 || value > 255 || std::isnan(value)) {
+        std::cout << "char: impossible" << std::endl;
+    } else if (std::isprint(static_cast<char>(value))) {
+        std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+    } else {
+        std::cout << "char: Non displayable" << std::endl;
+    }
+}
+
+void ScalarConverter::printInt(double value) {
+	if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max() || std::isnan(value)) {
+		std::cout << "int: impossible" << std::endl;
+	} else {
+		std::cout << "int: " << static_cast<int>(value) << std::endl;
+	}
+}
+
+void ScalarConverter::printFloat(double value) {
+	std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(value) << "f" << std::endl;
+}
+
+void ScalarConverter::printDouble(double value)
 {
-	if (str.length() == 1 && !isdigit(str[0]))
-		return true;
+	// std::stringstream	ss;
+
+	// ss << value;
+	std::cout << "ss : " << value << std::endl;
+	std::cout << "double: " << value << std::endl;
+}
+
+bool	ScalarConverter::isPseudoLiteral(const std::string &literal)
+{
+	const std::string pseudoLiterals[] = {
+		"nan", "nanf", "+inf", 
+		"-inf", "+inff", "-inff"
+	};
+
+	for (size_t i = 0; i < 6 ; i++)
+	{
+		if (literal == pseudoLiterals[i])
+			return true;
+	}
 	return false;
 }
 
-static bool	isInt(const std::string &str)
+double	ScalarConverter::getPseudoLiteralValue(const std::string &literal)
 {
-	if (str.length() == 1 && !isdigit(str[0]))
-		return false;
-	for (size_t i = 0; i < str.length(); i++)
-	{
-		if (i == 0 && (str[i] == '-' || str[i] == '+'))
-			continue;
-		if (!isdigit(str[i]))
-			return false;
-	}
-	return true;
-}
-
-void ScalarConverter::convert(const std::string &str)
-{
-	std::cout << "char: ";
-	if (isChar(str))
-	{
-		char c = str[0];
-		if (isprint(c))
-			std::cout << "'" << c << "'" << std::endl;
-		else
-			std::cout << "Non displayable" << std::endl;
-	}
-	else if (isInt(str))
-	{
-		int i = std::stoi(str);
-		if (i >= 32 && i <= 126)
-			std::cout << "'" << static_cast<char>(i) << "'" << std::endl;
-		else
-			std::cout << "Non displayable" << std::endl;
-	}
-	else
-		std::cout << "impossible" << std::endl;
-
-	std::cout << "int: ";
-	try
-	{
-		int i = std::stoi(str);
-		std::cout << i << std::endl;
-	}
-	catch (const std::exception &e)
-	{
-		std::cout << "impossible" << std::endl;
-	}
-
-	std::cout << "float: ";
-	try
-	{
-		float f = std::stof(str);
-		std::cout << f << "f" << std::endl;
-	}
-	catch (const std::exception &e)
-	{
-		std::cout << "impossible" << std::endl;
-	}
-
-	std::cout << "double: ";
-	try
-	{
-		double d = std::stod(str);
-		std::cout << d << std::endl;
-	}
-	catch (const std::exception &e)
-	{
-		std::cout << "impossible" << std::endl;
-	}
+	if (literal == "nan" || literal == "nanf")
+		return (std::numeric_limits<double>::quiet_NaN());
+	else if (literal == "+inf" || literal == "+inff")
+		return (std::numeric_limits<double>::infinity());
+	else if (literal == "-inf" || literal == "-inff")
+		return -(std::numeric_limits<double>::infinity());
+	return (0.0);
 }
